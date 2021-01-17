@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src = "../assets/androidjs.js" ></script>
+    <script src="../assets/androidjs.js"></script>
 </head>
 <style>
     body {
@@ -291,6 +291,7 @@
     //global variable
     var token = "";
     var tickets = "";
+    var globalLevel = "";
     var total_severity = {
         "normal_operation": 0,
         "medium_level_alerts": 0,
@@ -487,6 +488,7 @@
     }
     function resetAlertsCards() {
         $("#cards").empty();
+        $("#totalCards").empty();
 
     }
 
@@ -503,13 +505,20 @@
         var ticketsObj = {
             [severity]: severity_tickets,
         }
+        //console.log(ticketsObj[severity].length)
         resetAlertsCards();
         buildTable(severity, ticketsObj);
+        totalAssets(severity, ticketsObj);
     }
-    // function totalAssets(value, tickets) {
-    //     tickets = (tickets[level]).length;
-    // }
 
+    function totalAssets(level, ticketsArray) {
+
+        ticketsArray = ticketsArray[level].length;
+        //console.log(ticketsArray)
+        var row = `<span style="font-weight: 600; font-size:15px; padding-left: 10px;"> Total Assets: ${ticketsArray}</span>`
+        $("#totalCards").append(row)
+
+    }
 
 </script>
 
@@ -524,7 +533,7 @@
                     <div class="sk-chase-dot"></div>
                     <div class="sk-chase-dot"></div>
                     <div class="sk-chase-dot"></div>
-                  </div>
+                </div>
             </div>
         </div>
         <header id="header" style="display: none;">
@@ -610,7 +619,7 @@
         </div>
         <div class="container container-95" id="home_page" style="display: none; height: calc(100% - 230px)">
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'), resetSearchValue(), buildTable(this.id, tickets) "
+                onclick="nevigate('alerts_page','home_page'), resetSearchValue(),totalAssets(this.id,tickets), buildTable(this.id, tickets),globalLevel=this.id "
                 id="high_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -638,7 +647,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'),resetSearchValue(),buildTable(this.id, tickets) "
+                onclick="nevigate('alerts_page','home_page'),resetSearchValue(),totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
                 id="medium_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -666,7 +675,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'),resetSearchValue(), buildTable(this.id, tickets) "
+                onclick="nevigate('alerts_page','home_page'),resetSearchValue(), totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
                 id="normal_operation">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -700,13 +709,11 @@
                 <div class="input-field col s12 search-input " style="margin-top:0px; border-radius: 3px;">
                     <i class="material-icons prefix login-icon" style=" color:#cfd8dc">search</i>
                     <input placeholder="Search" id="search" type="text" class=" login-input"
-                        onfocusin="focusInput(this)" onfocusout="focusOut(this)"
-                        onkeyup="search2(this.value,'high_level_alerts')">
+                        onfocusin="focusInput(this)" onfocusout="focusOut(this)" onkeyup="search2(this.value,globalLevel)">
                 </div>
             </div>
-            <span style="font-weight: 600; font-size:22px; padding-left: 10px;"> Total Asset:</span>
+            <div id="totalCards"> </div>
             <div id="cards" style="overflow: auto; height: calc(100% - 90px)">
-
 
             </div>
 
@@ -721,7 +728,6 @@
                         </span>
                         <span style="display: flex;justify-content: center">DASHBOARD</span>
                     </div>
-
 
                 </div>
             </div>
