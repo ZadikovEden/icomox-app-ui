@@ -180,7 +180,7 @@
 
 
     function setHight(id) {
-        //document.getElementById(id).style.height = height_style;
+        document.getElementById(id).style.height = height_style;
     }
 
     function setHeader(total_assets, severity) {
@@ -525,12 +525,12 @@
                 </div>
             </div>
             <div id="countcards"><script>countTickets()</script></div>
-            <div id="cards" style="overflow: auto; max-height: 372px;">
+            <div id="cards" style="overflow: auto; height: calc(100% - 68px)">
                 <script>buildTable()</script>
             </div>
 
         </div>
-        <footer class="page-footer" id="footer" style="background-color:transparent; display:none">
+        <footer class="page-footer" id="footer" style="background-color:transparent; display:none;">
             <div class="container"
                 style=" width: 100%;border-top:1px solid #b0bec5 ; margin:0px; color:#b0bec5; padding-top:10px ">
                 <div class="row">
