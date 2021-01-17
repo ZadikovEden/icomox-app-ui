@@ -70,6 +70,10 @@
         display: block;
     }
 
+    .page-footer {
+        padding-top: 0px;
+    }
+
     html {
         height: 100%;
     }
@@ -294,10 +298,12 @@
     }
 
     var screen_height = window.screen.height + "px";
-    var height_style = "calc(" + screen_height + " - 180px)";
+    const header_footer_height = 170 + "px";
+    var body_height = "calc(" + screen_height + " - " + header_footer_height + ")";
+
 
     function setHight(id) {
-        document.getElementById(id).style.height = height_style;
+        document.getElementById(id).style.height = body_height;
     }
 
     function setHeader(total_assets, severity) {
@@ -311,7 +317,7 @@
         setHight(show);
         document.getElementById("footer").style.display = "block";
         document.getElementById("header").style.display = "block";
-        Cardvariablereset();
+        resetAlertsCards();
     }
 
     function showLoader(showFlag) {
@@ -394,7 +400,7 @@
         document.getElementById("footer").style.display = "none";
         document.getElementById("header").style.display = "none";
         document.getElementById("login").style.display = "block";
-        setHeader("15", "ALERTS MANAGEMENT")
+        //setHeader("15", "ALERTS MANAGEMENT")
         token = "";
     }
 
@@ -428,14 +434,13 @@
             </span>`
         $("#countcards").append(row)
     }
+    function buildTable(level, ticketsArray) {
 
-    function buildTable(level) {
-        for (var i in tickets) {
-            if (tickets[i].alertLevel === level) {
-                console.log(tickets[i].alertLevel)
-                var row = ` <div class="row margin-bottom">
+        ticketsArray = ticketsArray[level];
+        ticketsArray.map(ticket => {
+            var row = ` <div class="row margin-bottom">
                     <div class="col s12">
-                        <div class="card white">
+                        <div class="card white new">
                             <div class="card-content padding-bottom">
                                 <div class="row margin-bottom">
                                     <div class="col s1">
@@ -448,17 +453,18 @@
                                     <div class="col s11" style="padding: 0px;">
                                         <div class="col s8">
                                             <span class="card-title date-time ">
-                                                <span
-                                                    style="border-right: 2px solid #cfd8dc;  padding-right: 4px;"> ${tickets[i].created}</span>
-                                               
+                                                <span>
+                                                <span  style="border-right: 2px solid #cfd8dc;  padding-right: 4px;"> ${ticket.created.slice(0, 10)}</span>
+                                                    <span style="  padding-right: 4px;"> ${ticket.created.slice(11, 19)}</span>
+
                                             </span>
                                         </div>
                                         <div class="col s4" style="padding: 0px;">
                                             <span class="card-title date-time" style="background-color:#eeeeee; color: black; justify-items: center;
-                                            display: grid; border-radius: 9px 0 0 9px;"> ${tickets[i].state}</span>
+                                            display: grid; border-radius: 9px 0 0 9px;"> ${ticket.state}</span>
                                         </div>
                                         <div class="col s10">
-                                            <span class="card-title asset" style="margin-bottom: 0px!important;"> ${tickets[i].asset.name}</span>
+                                            <span class="card-title asset" style="margin-bottom: 0px!important;"> ${ticket.asset.name}</span>
                                         </div>
                                         <div class="col s2">
                                             <span class="card-title type"
@@ -468,7 +474,7 @@
                                             </span>
                                         </div>
                                         <div class="col s2">
-                                            <span class="card-title body"> ${tickets[i].alertType}</span>
+                                            <span class="card-title body"> ${ticket.alertType}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -476,17 +482,35 @@
                         </div>
                     </div>
                 </div>`
+            $("#cards").append(row)
+        })
+    }
+    function resetAlertsCards() {
+        $("#cards").empty();
 
-                $("#cards").append(row)
-            }
+    }
+
+    function resetSearchValue() {
+        $("#search").val("");
+    }
+
+    function search2(value, severity) {
+        value = value.toLowerCase();
+        var severity_tickets = tickets[severity];
+        severity_tickets = severity_tickets.filter(ticket => {
+            return (ticket.asset.name.toLowerCase()).includes(value);
+        })
+        var ticketsObj = {
+            [severity]: severity_tickets,
         }
+        resetAlertsCards();
+        buildTable(severity, ticketsObj);
     }
+    // function totalAssets(value, tickets) {
+    //     tickets = (tickets[level]).length;
+    // }
 
-    function Cardvariablereset() {
-        $("#cards").empty()
-        $("#countcards").empty()
 
-    }
 </script>
 
 <body>
@@ -511,7 +535,7 @@
                             <img class="" style="max-width:110px" src="../assets/images/icomox_logo.png">
                         </div>
                     </div>
-                    <div class="col s6" onclick="logout(),Cardvariablereset()"
+                    <div class="col s6" onclick="logout(),resetAlertsCards()"
                         style="display: grid;justify-content: right; padding-right: 0px;">
                         <div class="row" style=" margin: 0px;" style="display: grid;justify-content: right;">
                             <div class="col s6" style="font-size: 12px; padding-top:22px; padding-right: 0px;">
@@ -586,7 +610,7 @@
         </div>
         <div class="container container-95" id="home_page" style="display: none; height: calc(100% - 230px)">
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'),countTickets(2),buildTable(2) , setHeader('7','HIGH LEVEL ALERTS')"
+                onclick="nevigate('alerts_page','home_page'), resetSearchValue(), buildTable(this.id, tickets) "
                 id="high_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -614,7 +638,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'),countTickets(1),buildTable(1) , setHeader('3','MEDIUM LEVEL ALERTS')"
+                onclick="nevigate('alerts_page','home_page'),resetSearchValue(),buildTable(this.id, tickets) "
                 id="medium_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -642,7 +666,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'),countTickets(0), buildTable(0) ,setHeader('5','NORMAL OPERATION')"
+                onclick="nevigate('alerts_page','home_page'),resetSearchValue(), buildTable(this.id, tickets) "
                 id="normal_operation">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -676,18 +700,14 @@
                 <div class="input-field col s12 search-input " style="margin-top:0px; border-radius: 3px;">
                     <i class="material-icons prefix login-icon" style=" color:#cfd8dc">search</i>
                     <input placeholder="Search" id="search" type="text" class=" login-input"
-                        onfocusin="focusInput(this)" onfocusout="focusOut(this)">
+                        onfocusin="focusInput(this)" onfocusout="focusOut(this)"
+                        onkeyup="search2(this.value,'high_level_alerts')">
                 </div>
             </div>
-            <div id="countcards">
-                <script>
-                    countTickets()
-                </script>
-            </div>
-            <div id="cards" style="overflow: auto; max-height: 372px;">
-                <script>
-                    buildTable()
-                </script>
+            <span style="font-weight: 600; font-size:22px; padding-left: 10px;"> Total Asset:</span>
+            <div id="cards" style="overflow: auto; height: calc(100% - 90px)">
+
+
             </div>
 
         </div>
@@ -695,8 +715,7 @@
             <div class="container"
                 style=" width: 100%;border-top:1px solid #b0bec5 ; margin:0px; color:#b0bec5; padding-top:10px ">
                 <div class="row">
-                    <div class="col s12"
-                        onclick="nevigate('home_page', 'alerts_page'), setHeader('15','ALERTS MANAGEMENT')">
+                    <div class="col s12" onclick="nevigate('home_page', 'alerts_page')">
                         <span style="display: flex;justify-content: center">
                             <i class="small material-icons">dashboard</i>
                         </span>
