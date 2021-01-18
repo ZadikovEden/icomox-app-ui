@@ -285,6 +285,17 @@
         opacity: 0.7;
         z-index: 999;
     }
+
+    #no_search_results_msg {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .no-search-msg {
+        position: absolute;
+        top: 42%;
+        margin:0px;
+    }
 </style>
 
 <script>
@@ -311,13 +322,16 @@
         document.getElementById("custom_header").innerText = severity;
     }
 
-    function nevigate(show, hide) {
+    function nevigate(show, hide, text) {
+        
         document.getElementById(hide).style.display = "none";
         document.getElementById(show).style.display = "block";
         setHight(show);
+        setPageHeader(text);
         document.getElementById("footer").style.display = "block";
         document.getElementById("header").style.display = "block";
         resetAlertsCards();
+        resetNoSearchMsg();
     }
 
     function showLoader(showFlag) {
@@ -389,7 +403,7 @@
                 setTotalSeverityInHtml();
                 resetLoginPage();
                 showLoader(false);
-                nevigate("home_page", "login");
+                nevigate("home_page", "login", "ALERTS MANAGEMENT");
             })
             .catch(error => console.log('error', error));
     }
@@ -487,7 +501,10 @@
     function resetAlertsCards() {
         $("#cards").empty();
         $("#totalCards").empty();
+    }
 
+    function resetNoSearchMsg() {
+        document.getElementById('no_search_results_msg_parent').style="display:none;"
     }
 
     function resetSearchValue() {
@@ -504,8 +521,15 @@
             [severity]: severity_tickets,
         }
         resetAlertsCards();
-        buildTable(severity, ticketsObj);
         totalAssets(severity, ticketsObj);
+        if (ticketsObj[severity].length == 0) {
+            setNoResultsMsg('No results found for- "' + value + '"');
+            document.getElementById("no_search_results_msg_parent").style = "display:block;";
+        } else {
+            buildTable(severity, ticketsObj);
+            document.getElementById("no_search_results_msg_parent").style = "display:none;";
+            setNoResultsMsg("");
+        }
     }
 
     function totalAssets(level, ticketsArray) {
@@ -513,6 +537,12 @@
         var row =
             `<span style="font-weight: 600; font-size:15px; padding-left: 10px; color:#263238"> Total Assets: ${ticketsArray}</span>`
         $("#totalCards").append(row)
+    }
+    function setPageHeader(page_header_text) {
+        document.getElementById("page_header").innerText = page_header_text;
+    }
+    function setNoResultsMsg(msg) {
+        document.getElementById("no_search_results_msg").innerText = msg;
     }
 </script>
 
@@ -538,7 +568,7 @@
                             <img class="" style="max-width:170px" src="../assets/images/shiratech_icomox_logo.png">
                         </div>
                     </div>
-                    <div class="col s6" onclick="logout(),resetAlertsCards()"
+                    <div class="col s6" onclick="logout(), resetAlertsCards()"
                         style="display: grid;justify-content: right; padding-right: 0px;">
                         <div class="row" style=" margin: 0px;" style="display: grid;justify-content: right;">
                             <div class="col s6" style="font-size: 12px; padding-top:22px; padding-right: 0px;">
@@ -617,7 +647,7 @@
         </div>
         <div class="container container-95" id="home_page" style="display: none; height: calc(100% - 230px)">
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'), resetSearchValue(),totalAssets(this.id,tickets), buildTable(this.id, tickets),globalLevel=this.id "
+                onclick="nevigate('alerts_page','home_page', 'HIGH LEVEL ALERTS'), resetSearchValue(),totalAssets(this.id,tickets), buildTable(this.id, tickets),globalLevel=this.id "
                 id="high_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -645,7 +675,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'),resetSearchValue(),totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
+                onclick="nevigate('alerts_page','home_page', 'MEDIUM LEVEL ALERTS'),resetSearchValue(),totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
                 id="medium_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -673,7 +703,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page'),resetSearchValue(), totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
+                onclick="nevigate('alerts_page','home_page', 'NORMAL OPERATION'),resetSearchValue(), totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
                 id="normal_operation">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -712,6 +742,14 @@
                 </div>
             </div>
             <div id="totalCards" style="padding-bottom:5px"> </div>
+            <div class="row no-search-msg" style="display:none; margin:0px; " id="no_search_results_msg_parent">
+                <div class="col s12" style="text-align:center">
+                    <img src="../assets/icon/icon.png" alt="icomox icon">
+                </div>
+                <div class="col s12" style="text-align: center;">
+                    <h6 id="no_search_results_msg" style="margin:8px 0px 0px 0px"></h6>
+                </div>
+            </div>
             <div id="cards" style="overflow: auto; height: calc(100% - 90px)">
             </div>
         </div>
@@ -719,7 +757,7 @@
             <div class="container"
                 style=" width: 100%;border-top:1px solid #b0bec5 ; margin:0px; color:#b0bec5; padding-top:10px ">
                 <div class="row">
-                    <div class="col s12" onclick="nevigate('home_page', 'alerts_page')">
+                    <div class="col s12" onclick="nevigate('home_page', 'alerts_page','ALERTS MANAGEMENT')">
                         <span style="display: flex;justify-content: center">
                             <i class="small material-icons">dashboard</i>
                         </span>
