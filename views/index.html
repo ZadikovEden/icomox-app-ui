@@ -55,7 +55,7 @@
     }
 
     .card .card-title {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .font-weight-600 {
@@ -159,7 +159,7 @@
     }
 
     .card .card-content .card-title.asset {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         color: #263238;
         font-weight: 500;
     }
@@ -299,7 +299,7 @@
     }
 
     var screen_height = window.screen.height + "px";
-    const header_footer_height = 170 + "px";
+    const header_footer_height = 200 + "px";
     var body_height = "calc(" + screen_height + " - " + header_footer_height + ")";
 
 
@@ -309,7 +309,6 @@
 
     function setHeader(total_assets, severity) {
         document.getElementById("custom_header").innerText = severity;
-        // document.getElementById("custom_header_total").innerText = "TOTAL ASSETS: " + total_assets;
     }
 
     function nevigate(show, hide) {
@@ -401,7 +400,6 @@
         document.getElementById("footer").style.display = "none";
         document.getElementById("header").style.display = "none";
         document.getElementById("login").style.display = "block";
-        //setHeader("15", "ALERTS MANAGEMENT")
         token = "";
     }
 
@@ -435,8 +433,8 @@
             </span>`
         $("#countcards").append(row)
     }
-    function buildTable(level, ticketsArray) {
 
+    function buildTable(level, ticketsArray) {
         ticketsArray = ticketsArray[level];
         ticketsArray.map(ticket => {
             var row = ` <div class="row margin-bottom">
@@ -457,7 +455,6 @@
                                                 <span>
                                                 <span  style="border-right: 2px solid #cfd8dc;  padding-right: 4px;"> ${ticket.created.slice(0, 10)}</span>
                                                     <span style="  padding-right: 4px;"> ${ticket.created.slice(11, 19)}</span>
-
                                             </span>
                                         </div>
                                         <div class="col s4" style="padding: 0px;">
@@ -474,7 +471,7 @@
                                                     style="color:#263238; margin-bottom: 0px!important;">chevron_right</i>
                                             </span>
                                         </div>
-                                        <div class="col s2">
+                                        <div class="col s12">
                                             <span class="card-title body"> ${ticket.alertType}</span>
                                         </div>
                                     </div>
@@ -486,6 +483,7 @@
             $("#cards").append(row)
         })
     }
+
     function resetAlertsCards() {
         $("#cards").empty();
         $("#totalCards").empty();
@@ -496,7 +494,7 @@
         $("#search").val("");
     }
 
-    function search2(value, severity) {
+    function search(value, severity) {
         value = value.toLowerCase();
         var severity_tickets = tickets[severity];
         severity_tickets = severity_tickets.filter(ticket => {
@@ -505,21 +503,17 @@
         var ticketsObj = {
             [severity]: severity_tickets,
         }
-        //console.log(ticketsObj[severity].length)
         resetAlertsCards();
         buildTable(severity, ticketsObj);
         totalAssets(severity, ticketsObj);
     }
 
     function totalAssets(level, ticketsArray) {
-
         ticketsArray = ticketsArray[level].length;
-        //console.log(ticketsArray)
-        var row = `<span style="font-weight: 600; font-size:15px; padding-left: 10px;"> Total Assets: ${ticketsArray}</span>`
+        var row =
+            `<span style="font-weight: 600; font-size:15px; padding-left: 10px; color:#263238"> Total Assets: ${ticketsArray}</span>`
         $("#totalCards").append(row)
-
     }
-
 </script>
 
 <body>
@@ -540,8 +534,8 @@
             <div>
                 <div class="row blue-grey" style="color:white">
                     <div class="col s6">
-                        <div class="row margin-bottom" style="display:block; padding: 20px 0px 20px 20px; ">
-                            <img class="" style="max-width:110px" src="../assets/images/icomox_logo.png">
+                        <div class="row margin-bottom" style="display:block; padding: 20px 0px 10px 20px; ">
+                            <img class="" style="max-width:170px" src="../assets/images/shiratech_icomox_logo.png">
                         </div>
                     </div>
                     <div class="col s6" onclick="logout(),resetAlertsCards()"
@@ -557,6 +551,10 @@
                                 </span>
                             </div>
                         </div>
+                    </div>
+                    <div class="col s12" id="page_header-div">
+                        <h5 id="page_header" style="display: flex;justify-content: center; margin-top:5px;
+                        margin-bottom:12px; font-size:27px;">ALERTS MANAGEMENT</h5>
                     </div>
                 </div>
             </div>
@@ -709,14 +707,13 @@
                 <div class="input-field col s12 search-input " style="margin-top:0px; border-radius: 3px;">
                     <i class="material-icons prefix login-icon" style=" color:#cfd8dc">search</i>
                     <input placeholder="Search" id="search" type="text" class=" login-input"
-                        onfocusin="focusInput(this)" onfocusout="focusOut(this)" onkeyup="search2(this.value,globalLevel)">
+                        onfocusin="focusInput(this)" onfocusout="focusOut(this)"
+                        onkeyup="search(this.value,globalLevel)">
                 </div>
             </div>
-            <div id="totalCards"> </div>
+            <div id="totalCards" style="padding-bottom:5px"> </div>
             <div id="cards" style="overflow: auto; height: calc(100% - 90px)">
-
             </div>
-
         </div>
         <footer class="page-footer" id="footer" style="background-color:transparent; display:none">
             <div class="container"
