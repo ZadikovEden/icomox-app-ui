@@ -309,7 +309,7 @@
     }
 
     var screen_height = window.screen.height + "px";
-    const header_footer_height = 293 + "px";
+    const header_footer_height = 288 + "px";
     var body_height = "calc(" + screen_height + " - " + header_footer_height + ")";
 
 
@@ -449,6 +449,12 @@
 
     function buildTable(level, ticketsArray) {
         ticketsArray = ticketsArray[level];
+        colorsObj = {
+            "high_level_alerts":"#EF5350",
+            "medium_level_alerts":"#ffd740",
+            "normal_operation":"#81C784" 
+        }
+
         ticketsArray.map(ticket => {
             var row = ` <div class="row margin-bottom">
                     <div class="col s12">
@@ -459,7 +465,7 @@
                                         <div class="row margin-bottom">
                                             <div class="col s12" style="height:74px;
                                             margin-left:10px; width:1px; border-radius: 2px;
-                                            background: #29b6f6; padding: 3px; margin-bottom: 10px;"></div>
+                                            background: ${colorsObj[globalLevel]}; padding: 3px; margin-bottom: 10px;"></div>
                                         </div>
                                     </div>
                                     <div class="col s11" style="padding: 0px;">
@@ -474,17 +480,10 @@
                                             <span class="card-title date-time" style="background-color:#eeeeee; color: black; justify-items: center;
                                             display: grid; border-radius: 9px 0 0 9px;"> ${ticket.state}</span>
                                         </div>
-                                        <div class="col s10">
+                                        <div class="col s12">
                                             <span class="card-title asset" style="margin-bottom: 0px!important;"> ${ticket.asset.name}</span>
                                         </div>
-                                        <div class="col s2">
-                                            <span class="card-title type"
-                                                style="margin-bottom: 0px!important; max-height: 20px;">
-                                                <i class="material-icons small"
-                                                    style="color:#263238; margin-bottom: 0px!important;">chevron_right</i>
-                                            </span>
-                                        </div>
-                                        <div class="col s12">
+                                        <div class="col s12" style="padding-top:5px">
                                             <span class="card-title body"> ${ticket.alertType}</span>
                                         </div>
                                     </div>
@@ -646,7 +645,7 @@
         </div>
         <div class="container container-95" id="home_page" style="display: none; height: calc(100% - 230px)">
             <div class="row"
-                onclick="nevigate('alerts_page','home_page', 'HIGH LEVEL ALERTS'), resetSearchValue(),totalAssets(this.id,tickets), buildTable(this.id, tickets),globalLevel=this.id "
+                onclick="globalLevel=this.id, nevigate('alerts_page','home_page', 'HIGH LEVEL ALERTS'), resetSearchValue(),totalAssets(this.id,tickets), buildTable(this.id, tickets)"
                 id="high_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -674,7 +673,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page', 'MEDIUM LEVEL ALERTS'),resetSearchValue(),totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
+                onclick="globalLevel=this.id, nevigate('alerts_page','home_page', 'MEDIUM LEVEL ALERTS'),resetSearchValue(),totalAssets(this.id,tickets),buildTable(this.id, tickets)"
                 id="medium_level_alerts">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
@@ -702,7 +701,7 @@
                 </div>
             </div>
             <div class="row"
-                onclick="nevigate('alerts_page','home_page', 'NORMAL OPERATION'),resetSearchValue(), totalAssets(this.id,tickets),buildTable(this.id, tickets),globalLevel=this.id  "
+                onclick="globalLevel=this.id, nevigate('alerts_page','home_page', 'NORMAL OPERATION'),resetSearchValue(), totalAssets(this.id,tickets),buildTable(this.id, tickets)"
                 id="normal_operation">
                 <div class="col s12 m6">
                     <div class="card white" style="color:#263238; border-radius: 2px;">
