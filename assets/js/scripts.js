@@ -42,9 +42,9 @@ function getTotalSeverity() {
     return JSON.parse(localStorage.getItem('total_severity'));
 }
 
-function setHight(id) {
+function setHeight(id) {
     const screen_height = window.screen.height + "px";
-    const header_height = 230 + "px";
+    const header_height = 260 + "px";
     const body_height = "calc(" + screen_height + " - " + header_height + ")";
     document.getElementById(id).style.height = body_height;
 }
@@ -60,15 +60,18 @@ function getQueryParam(param) {
 
 function nevigate(show, param, text) {
     let href = show + ".html";
-    if (param != "")
-        href += `?alert-level=${param}`;
+    param != "" ? href += `?alert-level=${param}` :null;
     window.location.assign(href);
-    setHight(show);
-    //setPageHeader(text);
-    //resetAlertsCards();
-    //resetNoSearchMsg();
 }
 
+function setBreadcrumb(alert_level) {
+    let breadcrumbObj = {
+        "high_level_alerts":"High Level Alerts",
+        "medium_level_alerts":"Medium Level Alerts",
+        "normal_operation":"Normal Operation",
+    }
+    document.getElementById("nav_last_child").innerText = breadcrumbObj[alert_level];
+}
 
 function showLoader(showFlag) {
     showFlag ? document.getElementById("loader_over_layout").style = "display:block" :
@@ -91,8 +94,8 @@ function login() {
     var urlencoded = new URLSearchParams();
     urlencoded.append("grant_type", "password");
     urlencoded.append("client_id", "login-app");
-    urlencoded.append("username", "shiratech");
-    urlencoded.append("password", "shiratech");
+    urlencoded.append("username", USERNAME);
+    urlencoded.append("password", PASSWORD);
 
     var requestOptions = {
         method: 'POST',

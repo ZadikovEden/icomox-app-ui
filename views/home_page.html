@@ -2,6 +2,17 @@
 <html>
 
 <head>
+    <script>
+        let total_severity= JSON.parse(localStorage.getItem('total_severity'))
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("high_level_alerts_label").innerText = total_severity.high_level_alerts +
+                " Assets";
+            document.getElementById("medium_level_alerts_label").innerText = total_severity
+                .medium_level_alerts + " Assets";
+            document.getElementById("normal_operation_label").innerText = total_severity.normal_operation +
+                " Assets";
+        });
+    </script>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -12,11 +23,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body onload="setTotalSeverityInHtml(getTotalSeverity())">
+<body onload="setHeight('home_page');">
     <div>
         <header id="header">
             <div>
-                <div class="row blue-grey" style="color:white">
+                <div class="row blue-grey" style="color:white; padding:5px 0px;">
                     <div class="col s6">
                         <div class="row margin-bottom" style="display:block; padding: 20px 0px 10px 20px; ">
                             <img class="" style="max-width:170px" src="../assets/images/shiratech_icomox_logo.png">
@@ -36,14 +47,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col s12" id="page_header-div">
-                        <h5 id="page_header" style="display: flex;justify-content: center; margin-top:5px;
-                        margin-bottom:12px; font-size:27px;">ALERTS MANAGEMENT</h5>
-                    </div>
                 </div>
             </div>
         </header>
-        <div class="container container-95" id="home_page" style="height: calc(100% - 230px)">
+        <nav>
+            <div class="nav-wrapper">
+                <div class="col s12">
+                    <a href="./home_page.html" class="breadcrumb" style="margin-left:10px">Home</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container container-95" id="home_page" style="margin-top:20px;">
             <div class="row" onclick="nevigate('alerts_page','high_level_alerts', 'HIGH LEVEL ALERTS')"
                 id="high_level_alerts">
                 <div class="col s12 m6">

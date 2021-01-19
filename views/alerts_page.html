@@ -6,16 +6,18 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="../assets/css/materialize.min.css" media="screen,projection" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../assets/css/styles.css" media="screen,projection" />
     <!--Let browser know website is optimized for mobile-->
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body onload="totalAssets(getQueryParam('alert-level'), getTickets()), resetSearchValue(), buildTable(getQueryParam('alert-level'), getTickets()), setHight('cards')">
+
+<body
+    onload="setBreadcrumb(getQueryParam('alert-level')), totalAssets(getQueryParam('alert-level'), getTickets()), resetSearchValue(), buildTable(getQueryParam('alert-level'), getTickets()), setHeight('cards')">
     <div>
         <header id="header">
             <div>
-                <div class="row blue-grey" style="color:white">
+                <div class="row blue-grey" style="color:white; padding:5px 0px;">
                     <div class="col s6">
                         <div class="row margin-bottom" style="display:block; padding: 20px 0px 10px 20px; ">
                             <img class="" style="max-width:170px" src="../assets/images/shiratech_icomox_logo.png">
@@ -35,17 +37,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col s12" id="page_header-div">
-                        <h5 id="page_header" style="display: flex;justify-content: center; margin-top:5px;
-                        margin-bottom:12px; font-size:27px;">ALERTS MANAGEMENT</h5>
-                    </div>
                 </div>
             </div>
         </header>
-        <div class="container container-95" id="alerts_page"
-            style="width:95%;">
+        <nav>
+            <div class="nav-wrapper">
+                <div class="col s12">
+                    <a href="#" class="breadcrumb" style="margin-left:10px">Home</a>
+                    <a id="nav_last_child" href="#" class="breadcrumb"></a>
+                </div>
+            </div>
+        </nav>
+        <div class="container container-95" id="alerts_page" style="width:95%;">
             <div class="row margin-bottom" style="padding:0px 0.75rem">
-                <div class="input-field col s12 search-input " style="margin-top:0px; border-radius: 3px;">
+                <div class="input-field col s12 search-input " style="margin-top:15px; border-radius: 3px;">
                     <i class="material-icons prefix login-icon" style=" color:#cfd8dc">search</i>
                     <input placeholder="Search" id="search" type="text" class=" login-input"
                         onfocusin="focusInput(this)" onfocusout="focusOut(this)"
@@ -69,8 +74,8 @@
     <script src="../assets/androidjs.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../assets/js/materialize.min.js"></script>
-    <script type="text/javascript" src = "../assets/js/scripts.js"></script>
-    <script type="text/javascript" src = "../assets/js/api.js"></script>
+    <script type="text/javascript" src="../assets/js/scripts.js"></script>
+    <script type="text/javascript" src="../assets/js/api.js"></script>
 </body>
 
 </html>
