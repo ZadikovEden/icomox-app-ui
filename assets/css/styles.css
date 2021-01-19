@@ -1,0 +1,282 @@
+body {
+    background-color: #eceff1;
+    font-size: 10px
+}
+
+.container-95 {
+    width: 95%;
+}
+
+.overflow-y {
+    overflow-y: scroll;
+}
+
+::placeholder {
+    color: #78909c;
+}
+
+.padding-bottom {
+    padding-bottom: 0px !important;
+}
+
+.margin-bottom {
+    margin-bottom: 0px;
+}
+
+.float-right {
+    float: right;
+}
+
+.logo {
+    max-width: 290px;
+}
+
+.icomox {
+    max-width: 100px;
+}
+
+.nav-wrapper {
+    padding: 0px 15px;
+}
+
+.card .card-title {
+    font-size: 14px;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.card .card-content .card-title {
+    line-height: 20px;
+}
+
+footer {
+    display: block;
+}
+
+.page-footer {
+    padding-top: 0px;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+.footer {
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+/*Login Page CSS*/
+.login-icon {
+    border-right: 1px solid;
+}
+
+.login-input {
+    margin-bottom: 0px !important;
+    padding-left: 10px !important;
+}
+
+.login-row {
+    border: 2px solid #04003e;
+}
+
+.search-input {
+    border-bottom: 1px solid #cfd8dc;
+}
+
+input[type=text]:not(.browser-default) {
+    border-bottom: none !important
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]) {
+    box-shadow: none !important;
+}
+
+input[type=password]:not(.browser-default) {
+    border-bottom: none !important
+}
+
+input[type=password]:not(.browser-default):focus:not([readonly]) {
+    box-shadow: none !important;
+}
+
+.input-field .prefix.active {
+    color: #4087c9;
+}
+
+.after-color {
+    border: 2px solid #4087c9 !important;
+}
+
+/*Login Error message*/
+.default.has-error {
+    display: block;
+    color: #d32f2f;
+    font-size: 14px;
+}
+
+.default {
+    display: none;
+    margin-top: 5px;
+}
+
+/*Alerts Page*/
+.card .card-content {
+    padding: 10px;
+}
+
+.card .card-content .card-title i {
+    line-height: 18px;
+}
+
+.card .card-content .card-title.date-time {
+    font-size: 10px;
+    color: #90a4ae;
+    font-weight: 500;
+}
+
+.card .card-content .card-title.asset {
+    font-size: 1.2rem;
+    color: #263238;
+    font-weight: 500;
+}
+
+#custom_header {
+    letter-spacing: 0.55px;
+}
+
+/*loader page*/
+.loader-div {
+    position: fixed;
+    left: 45%;
+    top: 40%;
+}
+
+.sk-chase {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    animation: sk-chase 2.5s infinite linear both;
+}
+
+.sk-chase-dot {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: sk-chase-dot 2.0s infinite ease-in-out both;
+}
+
+.sk-chase-dot:before {
+    content: '';
+    display: block;
+    width: 25%;
+    height: 25%;
+    background-color: #fff;
+    border-radius: 100%;
+    animation: sk-chase-dot-before 2.0s infinite ease-in-out both;
+}
+
+.sk-chase-dot:nth-child(1) {
+    animation-delay: -1.1s;
+}
+
+.sk-chase-dot:nth-child(2) {
+    animation-delay: -1.0s;
+}
+
+.sk-chase-dot:nth-child(3) {
+    animation-delay: -0.9s;
+}
+
+.sk-chase-dot:nth-child(4) {
+    animation-delay: -0.8s;
+}
+
+.sk-chase-dot:nth-child(5) {
+    animation-delay: -0.7s;
+}
+
+.sk-chase-dot:nth-child(6) {
+    animation-delay: -0.6s;
+}
+
+.sk-chase-dot:nth-child(1):before {
+    animation-delay: -1.1s;
+}
+
+.sk-chase-dot:nth-child(2):before {
+    animation-delay: -1.0s;
+}
+
+.sk-chase-dot:nth-child(3):before {
+    animation-delay: -0.9s;
+}
+
+.sk-chase-dot:nth-child(4):before {
+    animation-delay: -0.8s;
+}
+
+.sk-chase-dot:nth-child(5):before {
+    animation-delay: -0.7s;
+}
+
+.sk-chase-dot:nth-child(6):before {
+    animation-delay: -0.6s;
+}
+
+@keyframes sk-chase {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes sk-chase-dot {
+
+    80%,
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes sk-chase-dot-before {
+    50% {
+        transform: scale(0.4);
+    }
+
+    100%,
+    0% {
+        transform: scale(1.0);
+    }
+}
+
+.loader-over-layout {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin: 0em;
+    left: 0em;
+    top: 0em;
+    background: #37474f;
+    opacity: 0.7;
+    z-index: 999;
+}
+
+#no_search_results_msg {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.no-search-msg {
+    margin-top:120px;
+    margin:100px 0px 0px 0px;
+}
