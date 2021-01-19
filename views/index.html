@@ -6,16 +6,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="../assets/css/materialize.min.css" media="screen,projection" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+    <link type="text/css" rel="stylesheet" href="../assets/css/styles.css" media="screen,projection" />
     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="../assets/androidjs.js"></script>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<script>
-    
-</script>
-
 <body>
     <div>
         <div id="loader_over_layout" class="loader-over-layout" style="display: none;">
@@ -30,36 +25,6 @@
                 </div>
             </div>
         </div>
-        <header id="header" style="display: none;">
-            <div>
-                <div class="row blue-grey" style="color:white">
-                    <div class="col s6">
-                        <div class="row margin-bottom" style="display:block; padding: 20px 0px 10px 20px; ">
-                            <img class="" style="max-width:170px" src="../assets/images/shiratech_icomox_logo.png">
-                        </div>
-                    </div>
-                    <div class="col s6" onclick="logout(), resetAlertsCards()"
-                        style="display: grid;justify-content: right; padding-right: 0px;">
-                        <div class="row" style=" margin: 0px;" style="display: grid;justify-content: right;">
-                            <div class="col s6" style="font-size: 12px; padding-top:22px; padding-right: 0px;">
-                                <span style="padding-right: 10px;">LOGOUT</span>
-                            </div>
-                            <div class="col s6"
-                                style="font-size: 12px; padding-top:25px; padding-right: 0px; padding-left: 14px;">
-                                <span>
-                                    <i class=" material-icons" style="font-size: 14px;">arrow_forward</i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12" id="page_header-div">
-                        <h5 id="page_header" style="display: flex;justify-content: center; margin-top:5px;
-                        margin-bottom:12px; font-size:27px;">ALERTS MANAGEMENT</h5>
-                    </div>
-                </div>
-            </div>
-        </header>
-
         <div id="login">
             <div class="container">
                 <p id="msg">
@@ -115,132 +80,13 @@
                 </div>
             </div>
         </div>
-        <div class="container container-95" id="home_page" style="display: none; height: calc(100% - 230px)">
-            <div class="row"
-                onclick="globalLevel=this.id, nevigate('alerts_page','home_page', 'HIGH LEVEL ALERTS'), resetSearchValue(),totalAssets(this.id,tickets), buildTable(this.id, tickets)"
-                id="high_level_alerts">
-                <div class="col s12 m6">
-                    <div class="card white" style="color:#263238; border-radius: 2px;">
-                        <div class="card-content" style="padding:15px">
-                            <div class="row" style="margin: 0px;">
-                                <div class="col s3 red lighten-1"
-                                    style=" height:55px; border-radius:5px; position:relative">
-                                    <i class="material-icons" style="position: absolute;top: 12px; left: 28%; color:white;
-                                            font-size: 2.2rem;">error</i>
-                                </div>
-                                <div class="col s7" style="padding-left:15px">
-                                    <span class="card-title" style="font-weight: 600; font-size:22px"
-                                        id="high_level_alerts_label"></span>
-                                    <span class="card-title">High level alert</span>
-                                </div>
-                                <div class="col s2" style="
-                                        position: absolute;
-                                        top: 28px;
-                                        right: 0px;">
-                                    <i class="small material-icons">keyboard_arrow_right</i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row"
-                onclick="globalLevel=this.id, nevigate('alerts_page','home_page', 'MEDIUM LEVEL ALERTS'),resetSearchValue(),totalAssets(this.id,tickets),buildTable(this.id, tickets)"
-                id="medium_level_alerts">
-                <div class="col s12 m6">
-                    <div class="card white" style="color:#263238; border-radius: 2px;">
-                        <div class="card-content" style="padding:15px">
-                            <div class="row" style="margin: 0px;">
-                                <div class="col s3 amber accent-2"
-                                    style=" height:55px; border-radius:5px; position:relative">
-                                    <i class="material-icons" style="position: absolute;top: 12px; left: 28%; color:white;
-                                            font-size: 2.2rem;">warning</i>
-                                </div>
-                                <div class="col s7" style="padding-left:15px">
-                                    <span class="card-title" style="font-weight: 600; font-size:22px"
-                                        id="medium_level_alerts_label">3 Assets</span>
-                                    <span class="card-title">Medium level alerts</span>
-                                </div>
-                                <div class="col s2" style="
-                                        position: absolute;
-                                        top: 28px;
-                                        right: 0px;">
-                                    <i class="small material-icons">keyboard_arrow_right</i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row"
-                onclick="globalLevel=this.id, nevigate('alerts_page','home_page', 'NORMAL OPERATION'),resetSearchValue(), totalAssets(this.id,tickets),buildTable(this.id, tickets)"
-                id="normal_operation">
-                <div class="col s12 m6">
-                    <div class="card white" style="color:#263238; border-radius: 2px;">
-                        <div class="card-content" style="padding:15px">
-                            <div class="row" style="margin: 0px;">
-                                <div class="col s3 green lighten-2"
-                                    style=" height:55px; border-radius:5px; position:relative">
-                                    <i class="material-icons" style="position: absolute;top: 12px; left: 31%; color:white;
-                                            font-size: 2.2rem;">check_circle</i>
-                                </div>
-                                <div class="col s7" style="padding-left:20px">
-                                    <span class="card-title" style="font-weight: 600; font-size:22px"
-                                        id="normal_operation_label">5 Assets</span>
-                                    <span class="card-title">Normal Operation</span>
-                                </div>
-                                <div class="col s2" style="
-                                        position: absolute;
-                                        top: 28px;
-                                        right: 0px;">
-                                    <i class="small material-icons">keyboard_arrow_right</i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container container-95" id="alerts_page"
-            style="display: none; width:95%; height: calc(100% - 230px)">
-            <div class="row margin-bottom" style="padding:0px 0.75rem">
-                <div class="input-field col s12 search-input " style="margin-top:0px; border-radius: 3px;">
-                    <i class="material-icons prefix login-icon" style=" color:#cfd8dc">search</i>
-                    <input placeholder="Search" id="search" type="text" class=" login-input"
-                        onfocusin="focusInput(this)" onfocusout="focusOut(this)"
-                        onkeyup="search(this.value,globalLevel)">
-                </div>
-            </div>
-            <div id="totalCards" style="padding-bottom:5px"> </div>
-            <div class="row no-search-msg" style="display:none; margin:0px; " id="no_search_results_msg_parent">
-                <div class="col s12" style="text-align:center">
-                    <img src="../assets/icon/icon.png" alt="icomox icon">
-                </div>
-                <div class="col s12" style="text-align: center;">
-                    <h6 id="no_search_results_msg" style="margin:8px 0px 0px 0px"></h6>
-                </div>
-            </div>
-            <div id="cards" style="overflow: auto; height: calc(100% - 90px)">
-            </div>
-        </div>
-        <footer class="page-footer" id="footer" style="background-color:transparent; display:none">
-            <div class="container"
-                style=" width: 100%;border-top:1px solid #b0bec5 ; margin:0px; color:#b0bec5; padding-top:10px ">
-                <div class="row">
-                    <div class="col s12" onclick="nevigate('home_page', 'alerts_page','ALERTS MANAGEMENT')">
-                        <span style="display: flex;justify-content: center">
-                            <i class="small material-icons">dashboard</i>
-                        </span>
-                        <span style="display: flex;justify-content: center">DASHBOARD</span>
-                    </div>
-
-                </div>
-            </div>
-        </footer>
     </div>
-
     <!-- Compiled and minified JavaScript -->
+    <!-- <script src="../assets/androidjs.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../assets/js/materialize.min.js"></script>
+    <script type="text/javascript" src = "../assets/js/scripts.js"></script>
+    <script type="text/javascript" src = "../assets/js/api.js"></script>
 </body>
 
 </html>

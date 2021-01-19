@@ -1,19 +1,51 @@
 //global variable
-var token = "";
-var tickets = "";
-var globalLevel = "";
-var total_severity = {
-    "normal_operation": 0,
-    "medium_level_alerts": 0,
-    "high_level_alerts": 0,
+function setToken(token) {
+    localStorage.setItem('token', token);
 }
 
-var screen_height = window.screen.height + "px";
-const header_footer_height = 288 + "px";
-var body_height = "calc(" + screen_height + " - " + header_footer_height + ")";
+function setTickets(tickets) {
+    localStorage.setItem('tickets', JSON.stringify(tickets));
+}
 
+function setAlertLevel(alert_level) {
+    localStorage.setItem('alert_level', alert_level);
+}
+
+function setTotalSeverity() {
+    const tickets = getTickets();
+    var total_severity = {
+        "normal_operation": 0,
+        "medium_level_alerts": 0,
+        "high_level_alerts": 0,
+    }
+
+    total_severity.normal_operation = tickets.normal_operation.length;
+    total_severity.medium_level_alerts = tickets.medium_level_alerts.length;
+    total_severity.high_level_alerts = tickets.high_level_alerts.length;
+
+    localStorage.setItem('total_severity', JSON.stringify(total_severity));
+}
+
+function getToken() {
+    return localStorage.getItem('token');
+}
+
+function getTickets() {
+    return JSON.parse(localStorage.getItem('tickets'));
+}
+
+function getALertLevel() {
+    return localStorage.getItem('alert_level');
+}
+
+function getTotalSeverity() {
+    return JSON.parse(localStorage.getItem('total_severity'));
+}
 
 function setHight(id) {
+    const screen_height = window.screen.height + "px";
+    const header_height = 230 + "px";
+    const body_height = "calc(" + screen_height + " - " + header_height + ")";
     document.getElementById(id).style.height = body_height;
 }
 
@@ -21,21 +53,32 @@ function setHeader(total_assets, severity) {
     document.getElementById("custom_header").innerText = severity;
 }
 
-function nevigate(show, hide, text) {
-    
-    document.getElementById(hide).style.display = "none";
-    document.getElementById(show).style.display = "block";
-    setHight(show);
-    setPageHeader(text);
-    document.getElementById("footer").style.display = "block";
-    document.getElementById("header").style.display = "block";
-    resetAlertsCards();
-    resetNoSearchMsg();
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return paramValue = urlParams.get(param);
 }
+
+function nevigate(show, param, text) {
+    let href = show + ".html";
+    if (param != "")
+        href += `?alert-level=${param}`;
+    window.location.assign(href);
+    setHight(show);
+    //setPageHeader(text);
+    //resetAlertsCards();
+    //resetNoSearchMsg();
+}
+
 
 function showLoader(showFlag) {
     showFlag ? document.getElementById("loader_over_layout").style = "display:block" :
         document.getElementById("loader_over_layout").style = "display:none";
+}
+
+function setTotalSeverityInHtml(total_severity) {
+    document.getElementById("high_level_alerts_label").innerText = total_severity.high_level_alerts + " Assets";
+    document.getElementById("medium_level_alerts_label").innerText = total_severity.medium_level_alerts + " Assets";
+    document.getElementById("normal_operation_label").innerText = total_severity.normal_operation + " Assets";
 }
 
 function login() {
@@ -65,7 +108,7 @@ function login() {
             return Promise.reject(response)
         })
         .then(result => {
-            token = result.access_token;
+            setToken(result.access_token)
             fetchData();
             showLoader(true);
         })
@@ -75,45 +118,27 @@ function login() {
         });
 }
 
-function setTotalSeverity() {
-    total_severity.normal_operation = tickets.normal_operation.length;
-    total_severity.medium_level_alerts = tickets.medium_level_alerts.length;
-    total_severity.high_level_alerts = tickets.high_level_alerts.length;
-}
-
-function setTotalSeverityInHtml() {
-    const ASSET = " Assets";
-    document.getElementById("normal_operation_label").innerText = total_severity.normal_operation + ASSET;
-    document.getElementById("medium_level_alerts_label").innerText = total_severity.medium_level_alerts + ASSET;
-    document.getElementById("high_level_alerts_label").innerText = total_severity.high_level_alerts + ASSET;
-}
-
 function fetchData() {
     var requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
 
-    fetch(`https://fast-garden-32068.herokuapp.com/tickets/opened/${token}`, requestOptions)
+    fetch(`https://fast-garden-32068.herokuapp.com/tickets/opened/${getToken()}`, requestOptions)
         .then(response => response.json())
         .then(result => {
-            tickets = result;
+            setTickets(result);
             setTotalSeverity();
-            setTotalSeverityInHtml();
             resetLoginPage();
             showLoader(false);
-            nevigate("home_page", "login", "ALERTS MANAGEMENT");
+            nevigate("home_page", "", "ALERTS MANAGEMENT");
         })
         .catch(error => console.log('error', error));
 }
 
 function logout() {
-    document.getElementById("alerts_page").style.display = "none";
-    document.getElementById("home_page").style.display = "none";
-    document.getElementById("footer").style.display = "none";
-    document.getElementById("header").style.display = "none";
-    document.getElementById("login").style.display = "block";
-    token = "";
+    localStorage.clear();
+    window.location.assign("index.html");   
 }
 
 function resetLoginPage() {
@@ -134,25 +159,12 @@ function focusOut(e) {
     e.parentElement.classList.remove("after-color");
 }
 
-function countTickets(level) {
-    var count = 0;
-    for (var i in tickets) {
-        if (tickets[i].alertLevel === level) {
-            count += 1;
-        }
-    }
-    var row = `<span style="font-size: 1.3rem; color: #263238; font-weight: 500; padding: 0 15px;">
-       Total Alerts: ${count}
-        </span>`
-    $("#countcards").append(row)
-}
-
-function buildTable(level, ticketsArray) {
-    ticketsArray = ticketsArray[level];
+function buildTable(alert_level, ticketsArray) {
+    ticketsArray = ticketsArray[alert_level];
     colorsObj = {
-        "high_level_alerts":"#EF5350",
-        "medium_level_alerts":"#ffd740",
-        "normal_operation":"#81C784" 
+        "high_level_alerts": "#EF5350",
+        "medium_level_alerts": "#ffd740",
+        "normal_operation": "#81C784"
     }
 
     ticketsArray.map(ticket => {
@@ -165,7 +177,7 @@ function buildTable(level, ticketsArray) {
                                     <div class="row margin-bottom">
                                         <div class="col s12" style="height:74px;
                                         margin-left:10px; width:1px; border-radius: 2px;
-                                        background: ${colorsObj[globalLevel]}; padding: 3px; margin-bottom: 10px;"></div>
+                                        background: ${colorsObj[alert_level]}; padding: 3px; margin-bottom: 10px;"></div>
                                     </div>
                                 </div>
                                 <div class="col s11" style="padding: 0px;">
@@ -202,7 +214,7 @@ function resetAlertsCards() {
 }
 
 function resetNoSearchMsg() {
-    document.getElementById('no_search_results_msg_parent').style="display:none;"
+    document.getElementById('no_search_results_msg_parent').style = "display:none;"
 }
 
 function resetSearchValue() {
@@ -211,7 +223,7 @@ function resetSearchValue() {
 
 function search(value, severity) {
     value = value.toLowerCase();
-    var severity_tickets = tickets[severity];
+    var severity_tickets = getTickets()[severity];
     severity_tickets = severity_tickets.filter(ticket => {
         return (ticket.asset.name.toLowerCase()).includes(value);
     })
@@ -230,12 +242,12 @@ function search(value, severity) {
     }
 }
 
-function totalAssets(level, ticketsArray) {
-    ticketsArray = ticketsArray[level].length;
-    var row =
-        `<span style="font-weight: 600; font-size:15px; padding-left: 10px; color:#263238"> Total Assets: ${ticketsArray}</span>`
-    $("#totalCards").append(row)
+function totalAssets(alert_level, ticketsObj) {
+    let ticketsObjLength = ticketsObj[alert_level].length;
+    var row = `<span style="font-weight: 600; font-size:15px; padding-left: 10px; color:#263238"> Total Assets: ${ticketsObjLength}</span>`;
+    $("#totalCards").append(row);
 }
+
 function setPageHeader(page_header_text) {
     document.getElementById("page_header").innerText = page_header_text;
 }
