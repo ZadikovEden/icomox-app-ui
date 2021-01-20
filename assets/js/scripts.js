@@ -139,9 +139,9 @@ function fetchData() {
         .catch(error => console.log('error', error));
 }
 
-function logout() {
+function logout(numOfPagesToGoBack) {
     localStorage.clear();
-    window.location.assign("index.html");   
+    window.history.go(numOfPagesToGoBack);  
 }
 
 function resetLoginPage() {

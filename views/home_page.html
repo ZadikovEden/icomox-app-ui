@@ -2,17 +2,6 @@
 <html>
 
 <head>
-    <script>
-        let total_severity= JSON.parse(localStorage.getItem('total_severity'))
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("high_level_alerts_label").innerText = total_severity.high_level_alerts +
-                " Assets";
-            document.getElementById("medium_level_alerts_label").innerText = total_severity
-                .medium_level_alerts + " Assets";
-            document.getElementById("normal_operation_label").innerText = total_severity.normal_operation +
-                " Assets";
-        });
-    </script>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -23,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body onload="setHeight('home_page');">
+<body onload="setTotalSeverityInHtml(getTotalSeverity()), setHeight('home_page');">
     <div>
         <header id="header">
             <div>
@@ -33,7 +22,7 @@
                             <img class="" style="max-width:170px" src="../assets/images/shiratech_icomox_logo.png">
                         </div>
                     </div>
-                    <div class="col s6" onclick="logout(), resetAlertsCards()"
+                    <div class="col s6" onclick="logout(-1), resetAlertsCards()"
                         style="display: grid;justify-content: right; padding-right: 0px;">
                         <div class="row" style=" margin: 0px;" style="display: grid;justify-content: right;">
                             <div class="col s6" style="font-size: 12px; padding-top:22px; padding-right: 0px;">
